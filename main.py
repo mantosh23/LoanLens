@@ -4,6 +4,7 @@ import pandas as pd
 import joblib
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 ml_model = {}
 
@@ -55,3 +56,5 @@ def predict(data : LoanApplication):
         "threshold": ml_model["threshold"],
         "Result": "High Risk" if prediction == 1 else "Low Risk"
     }
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
